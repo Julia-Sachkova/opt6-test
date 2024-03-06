@@ -8,6 +8,8 @@
 useHead({
   title: "OTP6 test",
 });
+
+document.body.classList.add("dx-viewport");
 </script>
 
 <style>

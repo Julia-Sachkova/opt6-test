@@ -4,4 +4,5 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
   ],
+  ssr: false,
 })

@@ -32,6 +32,7 @@ onClickOutside(target, () => emit("onClose"));
   border-radius: 5px;
   box-shadow: 0 0 3px 0 #000, inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
   background-color: #fff;
+  z-index: 1;
 }
 
 .popup__item {
