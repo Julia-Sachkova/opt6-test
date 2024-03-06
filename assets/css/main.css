@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'MyriadPro';
+    src: url('/public/fonts/8143.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'MyriadPro';
+}
+
+:root {
+    --pale-grey: #eeeff
+}
