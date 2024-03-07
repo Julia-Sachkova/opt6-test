@@ -4,12 +4,16 @@
   </NuxtLayout>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { onMounted } from "vue";
+
 useHead({
   title: "OTP6 test",
 });
 
-document.body.classList.add("dx-viewport");
+onMounted(() => {
+  document.body.classList.add("dx-viewport");
+});
 </script>
 
 <style>

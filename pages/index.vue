@@ -21,7 +21,7 @@
         ></LayoutColumnActionsModal>
       </div>
 
-      <GoodsTable class="goods__table"></GoodsTable>
+      <GoodsTable></GoodsTable>
     </div>
   </div>
 </template>
@@ -96,9 +96,5 @@ const showColumnModal = ref(false);
   background-image: url("../assets/images/settings.svg");
   background-position: center;
   cursor: pointer;
-}
-
-.goods__table {
-  border-top: 1px solid #ddd;
 }
 </style>

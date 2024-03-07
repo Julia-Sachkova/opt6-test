@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@vueuse/nuxt',
+    '@pinia/nuxt',
   ],
-  ssr: false,
+  pinia: {
+    storesDirs: ['./store/**'],
+  },
 })
