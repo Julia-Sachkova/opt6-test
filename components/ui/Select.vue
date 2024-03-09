@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <span class="select__value">{{ value }}</span>
+    <span class="select__value">{{ props.value }}</span>
 
     <button class="select__btn" type="button" @click="openList = true">
       ►
@@ -9,7 +9,7 @@
     <ul class="select__list" v-if="openList" ref="list">
       <li
         class="select__item"
-        v-for="option in options"
+        v-for="option in props.options"
         :key="option.value"
         @click="setNewValue(option.value)"
       >

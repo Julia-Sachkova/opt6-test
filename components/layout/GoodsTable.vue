@@ -6,7 +6,7 @@
       <th class="table__head-cell">Действие</th>
 
       <draggable
-        :modelValue="Object.values(tableHeader)"
+        :modelValue="Object.values(tableHeaderSorted)"
         item-key="id"
         @change="onColumnDragChange"
         class="table__drag-container"
@@ -30,43 +30,7 @@
       handle=".handle"
     >
       <template #item="{ element, index }">
-        <tr class="table__row">
-          <td class="table__cell_drag">
-            <span class="table__index">{{ index + 1 }}</span>
-
-            <img
-              src="../assets/images/drag.svg"
-              alt="перетащить."
-              class="table__drag-icon handle"
-            />
-          </td>
-
-          <td class="table__cell table__cell_action">
-            <img
-              src="../assets/images/rowMenu.svg"
-              alt="действия."
-              class="table__actions"
-            />
-          </td>
-          <td
-            class="table__cell"
-            v-for="index in Object.keys(tableHeader)"
-            :key="index"
-            :style="[index === 'id' && { display: 'none' }]"
-          >
-            <UiInput
-              v-if="tableHeader[index].control === 'input'"
-              :type="tableHeader[index].type"
-              v-model:value="element[index]"
-            ></UiInput>
-
-            <UiSelect
-              v-else-if="tableHeader[index].control === 'lookup'"
-              :options="tableHeader[index].inputData"
-              v-model:value="element[index]"
-            ></UiSelect>
-          </td>
-        </tr>
+        <LayoutGoodsTableRow :row="element" :indexNumber="index"></LayoutGoodsTableRow>
       </template>
     </draggable>
   </table>
@@ -77,7 +41,7 @@ import { useTableStore } from "~/store/table.store";
 
 const store = useTableStore();
 
-const tableHeader = computed(() => store.tableHeader);
+const tableHeaderSorted = computed(() => store.tableHeaderSorted);
 const tableRows = computed(() => store.tableRows);
 
 const onRowDragChange = (e) => {
@@ -95,7 +59,7 @@ const onRowDragChange = (e) => {
 };
 
 const onColumnDragChange = (e) => {
-  let newArr = Object.keys(tableHeader.value);
+  let newArr = Object.keys(tableHeaderSorted.value);
 
   if (e.moved.newIndex >= newArr.length) {
     let k = e.moved.newIndex - newArr.length + 1;
@@ -108,11 +72,13 @@ const onColumnDragChange = (e) => {
   let newHeader = {};
 
   for (let i = 0; i < newArr.length; i++) {
-    newHeader[newArr[i]] = tableHeader.value[newArr[i]];
+    newHeader[newArr[i]] = tableHeaderSorted.value[newArr[i]];
   }
 
   store.changeTableHeaders(newHeader);
 };
+
+store.setupTableHeaderSort()
 </script>
 
 <style scoped>
@@ -150,52 +116,6 @@ const onColumnDragChange = (e) => {
   min-width: 40px;
 }
 
-.table__row {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.table__cell {
-  flex: 1;
-  padding: 5px;
-  text-align: left;
-  text-overflow: ellipsis;
-  min-width: 220px;
-  width: 220px;
-}
-
-.table__cell_action {
-  display: flex;
-  align-items: center;
-}
-
-.table__cell_drag {
-  width: 40px;
-  min-width: 40px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.table__index {
-  font-size: 16px;
-}
-
-.table__drag-icon {
-  width: 11px;
-  height: 12px;
-}
-
-.table__actions {
-  width: 3px;
-  height: 13px;
-  cursor: pointer;
-}
-
 .rows-drag .sortable-chosen {
   border: 2px dashed #a6b7d4;
   border-radius: 5px;
@@ -203,6 +123,6 @@ const onColumnDragChange = (e) => {
 
 .table__drag-container {
   display: flex;
-  width: 80.5%;
+  width: 100%;
 }
 </style>

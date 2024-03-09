@@ -1,19 +1,20 @@
 <template>
-  <article class="delete" ref="delete">Удалить</article>
+  <article class="delete" ref="target" @click="onDelete">Удалить</article>
 </template>
   
 <script setup>
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 
-const emit = defineEmits(["onClose". "onDelete"]);
+const emit = defineEmits(["onClose", "onDelete"]);
 
-const delete = ref(null);
+const target = ref(null);
 
-onClickOutside(delete, () => (emit('onClose')));
+onClickOutside(target, () => (emit('onClose')));
 
 const onDelete = () => {
     emit('onDelete')
+    emit('onClose')
 }
 </script>
   
@@ -28,6 +29,7 @@ const onDelete = () => {
   z-index: 2;
   padding: 7px 10px;
   font-size: 10px;
-  color: #8f8f8f;
+  color: #ae0a0a;
+  cursor: pointer;
 }
 </style>

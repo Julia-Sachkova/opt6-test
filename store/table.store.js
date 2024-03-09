@@ -60,6 +60,8 @@ export const useTableStore = defineStore('table', {
                 },
             },
 
+            tableHeaderSorted: null,
+
             tableRows: [
                 {
                     id: 0,
@@ -88,12 +90,26 @@ export const useTableStore = defineStore('table', {
             ]
         }
     },
+
     actions: {
         changeTableRows(newRows) {
             this.tableRows = newRows
         },
+
         changeTableHeaders(newHead) {
-            this.tableHeader = newHead
+            this.tableHeaderSorted = newHead
+        },
+
+        setupTableHeaderSort() {
+            this.tableHeaderSorted = JSON.parse(JSON.stringify(this.tableHeader))
+        },
+
+        addHeaderSort(newHead) {
+            if (this.tableHeaderSorted[newHead]) {
+                delete this.tableHeaderSorted[newHead]
+            } else {
+                this.tableHeaderSorted[newHead] = this.tableHeader[newHead]
+            }
         }
     },
 })

@@ -1,5 +1,5 @@
 <template>
-  <input class="input" :type="props.type" :value="value" @input="updateInput" />
+  <input class="input" :type="props.type" :value="props.value" @input="updateInput" />
 </template>
     
 <script setup>
