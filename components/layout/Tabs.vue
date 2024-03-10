@@ -28,4 +28,10 @@
 .router-link-active {
   color: #000;
 }
+
+@media screen and (max-width: 520px) {
+  .tabs {
+    gap: 20px;
+  }
+}
 </style>

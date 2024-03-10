@@ -21,7 +21,9 @@
         ></LayoutColumnActionsModal>
       </div>
 
-      <LayoutGoodsTable></LayoutGoodsTable>
+      <LayoutGoodsTable class="goods__table"></LayoutGoodsTable>
+
+      <LayoutGoodsCardsList class="goods__cards"></LayoutGoodsCardsList>
 
       <button type="button" class="goods__save-btn" :class="{ 'goods__save-btn_active' :isRowsChanged}" @click="onSaveChange">Сохранить</button>
     </div>
@@ -120,6 +122,7 @@ const addNewRow = () => {
 }
 
 .goods__btn-group {
+  display: block;
   position: relative;
   width: 15px;
   height: 15px;
@@ -154,5 +157,36 @@ const addNewRow = () => {
   opacity: 1;
   cursor: pointer;
   pointer-events: auto;
+}
+
+.goods__table {
+  display: flex;
+}
+
+.goods__cards {
+  display: none;
+}
+
+@media screen and (max-width: 520px) {
+  .goods__btn-group {
+    display: none;
+  }
+
+  .goods__table-group {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .goods__table {
+    display: none;
+  }
+
+  .goods__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
 }
 </style>

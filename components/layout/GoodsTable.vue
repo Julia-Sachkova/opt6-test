@@ -30,7 +30,10 @@
       handle=".handle"
     >
       <template #item="{ element, index }">
-        <LayoutGoodsTableRow :row="element" :indexNumber="index"></LayoutGoodsTableRow>
+        <LayoutGoodsTableRow
+          :row="element"
+          :indexNumber="index"
+        ></LayoutGoodsTableRow>
       </template>
     </draggable>
   </table>
@@ -78,7 +81,7 @@ const onColumnDragChange = (e) => {
   store.changeTableHeaders(newHeader);
 };
 
-store.setupTableHeaderSort()
+store.setupTableHeaderSort();
 </script>
 
 <style scoped>

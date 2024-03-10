@@ -3,7 +3,10 @@
     <aside class="page__menu"></aside>
 
     <div class="page__content">
-      <h1 class="page__title">Проведение ТО и мелкий ремонт</h1>
+      <div class="page__top">
+        <button class="page__menu-btn" type="button"></button>
+        <h1 class="page__title">Проведение ТО и мелкий ремонт</h1>
+      </div>
 
       <LayoutTabs></LayoutTabs>
 
@@ -12,8 +15,7 @@
   </section>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 .page {
@@ -37,7 +39,41 @@
   gap: 25px;
 }
 
+.page__top {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 25px;
+}
+
 .page__title {
   font-size: 30px;
+  line-height: normal;
+}
+
+.page__menu-btn {
+  display: none;
+}
+
+@media screen and (max-width: 520px) {
+  .page__menu {
+    display: none;
+  }
+
+  .page__content {
+    width: 100%;
+    padding: 16px 10px;
+  }
+
+  .page__menu-btn {
+    display: block;
+    width: 15px;
+    height: 12px;
+    border: none;
+    background-color: transparent;
+    background-image: url("../assets/images/drag.svg");
+    cursor: pointer;
+    margin-top: 9px;
+  }
 }
 </style>
