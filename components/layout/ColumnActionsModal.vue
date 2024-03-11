@@ -1,38 +1,51 @@
 <template>
   <ul class="popup" ref="target" v-if="displayList === 'display'">
     <li class="popup__item" @click="showDefaultColumns">
-      <img src="../../assets/images/selectArrBlack.svg" alt="назад." class="popup__display-arr" />
+      <img
+        src="../../assets/images/selectArrBlack.svg"
+        alt="назад."
+        class="popup__display-arr"
+      />
 
       <span>Отображение столбцов</span>
     </li>
-    <li class="popup__item popup__item_display" v-for="(cell, index) in tableHeader" :key="cell.id">
+    <li
+      class="popup__item popup__item_display"
+      v-for="(cell, index) in tableHeader"
+      :key="cell.id"
+    >
       <input
-        type="checkbox" 
+        type="checkbox"
         @change="addFilter(index)"
-        :checked="tableHeaderSorted[index]" 
+        :checked="tableHeaderSorted[index]"
+        :id="cell.name"
       />
 
-      <span>{{cell.name}}</span>
+      <label :for="cell.name">{{ cell.name }}</label>
     </li>
   </ul>
 
   <ul class="popup" ref="target" v-else-if="displayList === 'order'">
     <li class="popup__item" @click="showDefaultColumns">
-      <img src="../../assets/images/selectArrBlack.svg" alt="назад." class="popup__display-arr" />
+      <img
+        src="../../assets/images/selectArrBlack.svg"
+        alt="назад."
+        class="popup__display-arr"
+      />
 
       <span>Порядок столбцов</span>
     </li>
     <draggable
-        :modelValue="Object.values(tableHeaderSorted)"
-        item-key="id"
-        @change="onColumnDragChange"
-      >
-          <template #item="{ element }">
-            <li class="popup__item">
-              <span>{{element.name}}</span>
-            </li>
-          </template>
-      </draggable>
+      :modelValue="Object.values(tableHeaderSorted)"
+      item-key="id"
+      @change="onColumnDragChange"
+    >
+      <template #item="{ element }">
+        <li class="popup__item">
+          <span>{{ element.name }}</span>
+        </li>
+      </template>
+    </draggable>
   </ul>
 
   <ul class="popup" ref="target" v-else>
@@ -59,7 +72,7 @@ const emit = defineEmits(["onClose"]);
 const store = useTableStore();
 
 const target = ref(null);
-const displayList = ref('default')
+const displayList = ref("default");
 
 const tableHeader = computed(() => store.tableHeader);
 const tableHeaderSorted = computed(() => store.tableHeaderSorted);
@@ -67,20 +80,20 @@ const tableHeaderSorted = computed(() => store.tableHeaderSorted);
 onClickOutside(target, () => emit("onClose"));
 
 const showDisplayColumns = () => {
-  displayList.value = 'display'
-}
+  displayList.value = "display";
+};
 
 const showOrderColumns = () => {
-  displayList.value = 'order'
-}
+  displayList.value = "order";
+};
 
 const showDefaultColumns = () => {
-  displayList.value = 'default'
-}
+  displayList.value = "default";
+};
 
 const addFilter = (item) => {
-  store.addHeaderSort(item)
-}
+  store.addHeaderSort(item);
+};
 
 const onColumnDragChange = (e) => {
   let newArr = Object.keys(tableHeaderSorted.value);
@@ -100,7 +113,7 @@ const onColumnDragChange = (e) => {
   }
 
   store.changeTableHeaders(newHeader);
-}
+};
 </script>
 
 <style>
@@ -139,6 +152,13 @@ const onColumnDragChange = (e) => {
 
 .popup__item:hover {
   background-color: #eef3f8;
+}
+
+.popup__item label {
+  font-size: 14px;
+  color: #161616;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .popup__item span {

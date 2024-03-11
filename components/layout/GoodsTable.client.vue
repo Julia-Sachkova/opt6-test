@@ -1,26 +1,29 @@
 <template>
   <table class="table">
-    <tr class="table__header">
-      <th class="table__head-cell_empty"></th>
+    <draggable
+      :modelValue="Object.values(tableHeaderSorted)"
+      item-key="id"
+      @change="onColumnDragChange"
+      class="table__header"
+      handle=".handle"
+    >
+      <template #item="{ element, index }">
+        <th
+          class="table__head-cell"
+          :class="[{ 'table__head-cell_empty': element.control === 'index' }]"
+        >
+        <div class="table__head-cell-content handle">
+          <span v-if="element.control === 'action'">Действие</span>
 
-      <th class="table__head-cell">Действие</th>
-
-      <draggable
-        :modelValue="Object.values(tableHeaderSorted)"
-        item-key="id"
-        @change="onColumnDragChange"
-        class="table__drag-container"
-      >
-        <template #item="{ element, index }">
-          <th
-            class="table__head-cell"
-            :style="[index === 'id' && { display: 'none' }]"
-          >
+          <span v-else-if="element.control !== 'index'">
             {{ element.name }}
-          </th>
-        </template>
-      </draggable>
-    </tr>
+          </span>
+        </div>
+
+          <!-- <div class="drag"  @mousedown="drag"></div> -->
+        </th>
+      </template>
+    </draggable>
 
     <draggable
       :modelValue="tableRows"
@@ -80,6 +83,20 @@ const onColumnDragChange = (e) => {
 
   store.changeTableHeaders(newHeader);
 };
+
+// const drag = (evt) => {
+//       let dragX = evt.clientX;
+//       let block = evt.target.parentElement
+
+//       document.onmousemove = function onMouseMove(e) {
+//         block.style.width = block.offsetWidth - dragX + e.clientX + "px";
+//         block.style.minWidth = block.offsetWidth - dragX + e.clientX + "px";
+//         dragX = e.clientX;
+//       };
+//       // remove mouse-move listener on mouse-up
+//       document.onmouseup = () =>
+//         (document.onmousemove = document.onmouseup = null);
+//     }
 </script>
 
 <style scoped>
@@ -100,7 +117,6 @@ const onColumnDragChange = (e) => {
 .table__head-cell {
   flex: 1;
   border-left: 1px solid var(--pale-grey);
-  padding: 14px;
   text-align: left;
   font-size: 16px;
   font-weight: 600;
@@ -110,6 +126,19 @@ const onColumnDragChange = (e) => {
   cursor: pointer;
   min-width: 220px;
   width: 220px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.table__head-cell-content {
+  padding: 14px;
+}
+
+.drag {
+  width: 2px;
+  height: 100%;
+  background-color: var(--pale-grey);
 }
 
 .table__head-cell_empty {

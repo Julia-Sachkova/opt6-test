@@ -2,6 +2,16 @@ export const useTableStore = defineStore("table", {
   state: () => {
     return {
       tableHeader: {
+        line_index: {
+          name: "Номер строки",
+          id: "line_index",
+          control: "index",
+        },
+        action: {
+          name: "Действие",
+          id: "action",
+          control: "action",
+        },
         unit_name: {
           name: "Наименование еденицы",
           id: "unit_name",

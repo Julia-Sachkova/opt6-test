@@ -1,8 +1,8 @@
 <template>
-  <div class="select">
+  <div class="select" @click="handleOpenList">
     <span class="select__value">{{ props.value }}</span>
 
-    <button class="select__btn" type="button" @click="handleOpenList">►</button>
+    <button class="select__btn" type="button">►</button>
 
     <ul class="select__list" v-if="openList" ref="list">
       <li

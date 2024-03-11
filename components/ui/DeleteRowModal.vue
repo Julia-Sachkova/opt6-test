@@ -28,7 +28,7 @@ const onDelete = () => {
   background-color: #fff;
   z-index: 2;
   padding: 7px 10px;
-  font-size: 10px;
+  font-size: 12px;
   color: #ae0a0a;
   cursor: pointer;
 }

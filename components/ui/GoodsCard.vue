@@ -1,6 +1,6 @@
 <template>
   <draggable
-    :modelValue="Object.values(fullHeaders)"
+    :modelValue="Object.values(tableHeaderSorted)"
     item-key="id"
     @change="onRowDragChange"
     class="card"
@@ -71,21 +71,6 @@ const showDeleteCard = ref(false);
 
 const tableHeaderSorted = computed(() => store.tableHeaderSorted);
 
-const addLines = {
-  line_index: {
-    name: "Номер строки",
-    id: "line_index",
-    control: "index",
-  },
-  action: {
-    name: "Действие",
-    id: "action",
-    control: "action",
-  },
-};
-
-const fullHeaders = ref(Object.assign({}, addLines, tableHeaderSorted.value));
-
 const handleDelete = () => {
   console.log(props.card.id);
 
@@ -94,7 +79,7 @@ const handleDelete = () => {
 };
 
 const onRowDragChange = (e) => {
-  let newArr = Object.keys(fullHeaders.value);
+  let newArr = Object.keys(tableHeaderSorted.value);
 
   if (e.moved.newIndex >= newArr.length) {
     let k = e.moved.newIndex - newArr.length + 1;
@@ -107,10 +92,10 @@ const onRowDragChange = (e) => {
   let newHeader = {};
 
   for (let i = 0; i < newArr.length; i++) {
-    newHeader[newArr[i]] = fullHeaders.value[newArr[i]];
+    newHeader[newArr[i]] = tableHeaderSorted.value[newArr[i]];
   }
 
-  fullHeaders.value = newHeader;
+  store.changeTableHeaders(newHeader);
 };
 </script>
 

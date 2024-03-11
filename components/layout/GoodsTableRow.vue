@@ -1,47 +1,53 @@
 <template>
-    <tr class="row">
-        <td class="row__cell_drag">
-          <span class="row__index">{{ props.indexNumber + 1 }}</span>
+  <tr class="row">
+    <td
+      v-for="index in Object.keys(tableHeaderSorted)"
+      :key="index"
+      :style="[index === 'id' && { display: 'none' }]"
+      class="row__cell"
+      :class="[
+        { row__cell_action: index === 'action' },
+        { row__cell_drag: index === 'line_index' },
+      ]"
+    >
+      <UiInput
+        v-if="tableHeaderSorted[index].control === 'input'"
+        :type="tableHeaderSorted[index].type"
+        v-model:value="props.row[index]"
+      ></UiInput>
 
-          <img
-            src="../../assets/images/drag.svg"
-            alt="перетащить."
-            class="row__drag-icon handle"
-          />
-        </td>
+      <UiSelect
+        v-else-if="tableHeaderSorted[index].control === 'lookup'"
+        :options="tableHeaderSorted[index].inputData"
+        v-model:value="props.row[index]"
+      ></UiSelect>
 
-        <td class="row__cell row__cell_action">
-          <img
-            src="../../assets/images/rowMenu.svg"
-            alt="действия."
-            class="row__actions"
-            @click="showDeleteRow = true"
-          />
+      <div class="row__cell-group" v-else-if="index === 'line_index'">
+        <span class="row__index">{{ props.indexNumber + 1 }}</span>
 
-          <UiDeleteRowModal v-if="showDeleteRow" @onClose="showDeleteRow = false" @onDelete="handleDelete"></UiDeleteRowModal>
-        </td>
+        <img
+          src="../../assets/images/drag.svg"
+          alt="перетащить."
+          class="row__drag-icon handle"
+        />
+      </div>
 
-        <div class="drag-container">
-          <td
-            class="row__cell"
-            v-for="index in Object.keys(tableHeaderSorted)"
-            :key="index"
-            :style="[index === 'id' && { display: 'none' }]"
-          >
-            <UiInput
-              v-if="tableHeaderSorted[index].control === 'input'"
-              :type="tableHeaderSorted[index].type"
-              v-model:value="props.row[index]"
-            ></UiInput>
+      <div class="row__cell-group" v-else-if="index === 'action'">
+        <img
+          src="../../assets/images/rowMenu.svg"
+          alt="действия."
+          class="row__actions"
+          @click="showDeleteRow = true"
+        />
 
-            <UiSelect
-              v-else-if="tableHeaderSorted[index].control === 'lookup'"
-              :options="tableHeaderSorted[index].inputData"
-              v-model:value="props.row[index]"
-            ></UiSelect>
-          </td>
-        </div>
-      </tr>
+        <UiDeleteRowModal
+          v-if="showDeleteRow"
+          @onClose="showDeleteRow = false"
+          @onDelete="handleDelete"
+        ></UiDeleteRowModal>
+      </div>
+    </td>
+  </tr>
 </template>
 
 <script setup>
@@ -52,16 +58,16 @@ const props = defineProps(["row", "indexNumber"]);
 
 const store = useTableStore();
 
-const showDeleteRow = ref(false)
+const showDeleteRow = ref(false);
 
 const tableHeaderSorted = computed(() => store.tableHeaderSorted);
 
 const handleDelete = () => {
-  console.log(props.row.id)
+  console.log(props.row.id);
 
   // функци удаления строки
   // для запроса использовать row.id - содержит id строки для удаления
-}
+};
 </script>
 
 <style scoped>
@@ -89,12 +95,17 @@ const handleDelete = () => {
 .row__cell_drag {
   width: 40px;
   min-width: 40px;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+}
+
+.row__cell-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 5px;
-  cursor: pointer;
 }
 
 .row__index {
