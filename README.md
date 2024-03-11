@@ -1,6 +1,12 @@
-# Nuxt 3 Minimal Starter
+# Тестовое задание для компании ОПТ6
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### Используемые технологии
+
+- Nuxt
+- Vue 3
+- Адаптивная верстка
+
+Ссылка на [сайт]()
 
 ## Setup
 
@@ -71,5 +77,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

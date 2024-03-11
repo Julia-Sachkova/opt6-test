@@ -8,7 +8,7 @@
 import { onMounted } from "vue";
 
 useHead({
-  title: "OTP6 test",
+  title: "ОПТ6 test",
 });
 
 onMounted(() => {

@@ -25,7 +25,16 @@
 
       <LayoutGoodsCardsList class="goods__cards"></LayoutGoodsCardsList>
 
-      <button type="button" class="goods__save-btn" :class="{ 'goods__save-btn_active' :isRowsChanged}" @click="onSaveChange">Сохранить</button>
+      <LayoutGoodsTotal></LayoutGoodsTotal>
+
+      <button
+        type="button"
+        class="goods__save-btn"
+        :class="{ 'goods__save-btn_active': isRowsChanged }"
+        @click="onSaveChange"
+      >
+        Сохранить
+      </button>
     </div>
   </div>
 </template>
@@ -41,37 +50,42 @@ const tableRows = computed(() => store.tableRows);
 const showColumnModal = ref(false);
 const isRowsChanged = ref(false);
 
-watch(tableRows, (newValue, oldValue) => {
-  isRowsChanged.value = true
-},
-{ deep: true })
+watch(
+  tableRows,
+  (newValue, oldValue) => {
+    isRowsChanged.value = true;
+  },
+  { deep: true }
+);
 
 const onSaveChange = () => {
-  isRowsChanged.value = false
+  isRowsChanged.value = false;
 
-  console.log(tableRows.value)
+  console.log(tableRows.value);
   // функция для сохранения изменений строк
   // для тела запроса использовать tableRows.value
-}
+};
 
 const addNewRow = () => {
   let newRow = {
-    id:  Date.now(), // эту стрку убрать, она нужна только для корректной работы без бэкенда
-    unit_name: '',
-    price: '',
-    amount: '',
-    good_name: '',
-    total: '',
-  }
+    id: Date.now(), // эту стрку убрать, она нужна только для корректной работы без бэкенда
+    unit_name: "",
+    price: "",
+    amount: "",
+    good_name: "",
+    total: "",
+  };
 
-  let newArr = JSON.parse(JSON.stringify(tableRows.value))
-  newArr.push(newRow)
+  let newArr = JSON.parse(JSON.stringify(tableRows.value));
+  newArr.push(newRow);
 
-  store.changeTableRows(newArr)
-  console.log(newArr)
-}
+  store.changeTableRows(newArr);
+  console.log(newArr);
+};
+
+store.setupTableHeaderSort();
 </script>
- 
+
 <style scoped>
 .goods {
   display: flex;
@@ -187,6 +201,7 @@ const addNewRow = () => {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 100%;
   }
 }
 </style>

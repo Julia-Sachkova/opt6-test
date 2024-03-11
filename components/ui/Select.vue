@@ -2,9 +2,7 @@
   <div class="select">
     <span class="select__value">{{ props.value }}</span>
 
-    <button class="select__btn" type="button" @click="openList = true">
-      ►
-    </button>
+    <button class="select__btn" type="button" @click="handleOpenList">►</button>
 
     <ul class="select__list" v-if="openList" ref="list">
       <li
@@ -30,21 +28,23 @@ const emit = defineEmits(["update:value"]);
 let openList = ref(false);
 const list = ref(null);
 
-onClickOutside(list, () => (openList = false));
+const handleOpenList = () => {
+  openList.value = true;
+};
 
 const setNewValue = (val) => {
   emit("update:value", val);
-  openList = false;
+  openList.value = false;
 };
+
+onClickOutside(list, (event) => (openList.value = false));
 </script>
 
 <style scoped>
 .select {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 90% 10%;
   position: relative;
   padding-left: 15px;
   border-radius: 5px;
@@ -58,6 +58,7 @@ const setNewValue = (val) => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 5px 0;
 }
 
 .select__btn {

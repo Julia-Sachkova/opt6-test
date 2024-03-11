@@ -80,8 +80,6 @@ const onColumnDragChange = (e) => {
 
   store.changeTableHeaders(newHeader);
 };
-
-store.setupTableHeaderSort();
 </script>
 
 <style scoped>
