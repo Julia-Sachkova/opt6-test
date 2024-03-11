@@ -62,7 +62,8 @@ const amount = computed(() => {
 const weight = computed(() => {
   const sum = tableRows.value.reduce(
     (accumulator, currentValue) =>
-      Number(accumulator) + Number(currentValue.weigth),
+      Number(accumulator) +
+      (isNaN(currentValue.weigth) ? 0 : Number(currentValue.weigth)),
     0
   );
 

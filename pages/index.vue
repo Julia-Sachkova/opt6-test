@@ -74,13 +74,13 @@ const addNewRow = () => {
     amount: "",
     good_name: "",
     total: "",
+    weight: "",
   };
 
   let newArr = JSON.parse(JSON.stringify(tableRows.value));
   newArr.push(newRow);
 
   store.changeTableRows(newArr);
-  console.log(newArr);
 };
 
 store.setupTableHeaderSort();
