@@ -88,6 +88,7 @@ const totalSum = computed(() => {
   gap: 5px;
   min-width: 305px;
   max-width: 100%;
+  margin-right: 15px;
 }
 
 .total__container {
@@ -132,6 +133,7 @@ const totalSum = computed(() => {
 @media screen and (max-width: 520px) {
   .total {
     width: 100%;
+    margin: 0;
   }
 }
 </style>
