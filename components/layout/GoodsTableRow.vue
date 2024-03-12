@@ -8,6 +8,7 @@
       :class="[
         { row__cell_action: index === 'action' },
         { row__cell_drag: index === 'line_index' },
+        index,
       ]"
     >
       <UiInput
@@ -82,7 +83,7 @@ const handleDelete = () => {
   padding: 5px;
   text-align: left;
   text-overflow: ellipsis;
-  min-width: 220px;
+  min-width: 30px;
   width: 220px;
 }
 
@@ -99,6 +100,7 @@ const handleDelete = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex: 0;
 }
 
 .row__cell-group {

@@ -55,7 +55,7 @@
   display: none;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 1660px) {
   .page__menu {
     display: none;
   }

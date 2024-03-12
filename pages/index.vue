@@ -181,7 +181,7 @@ store.setupTableHeaderSort();
   display: none;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 1380px) {
   .goods__btn-group {
     display: none;
   }
@@ -198,10 +198,16 @@ store.setupTableHeaderSort();
   }
 
   .goods__cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 5px;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .goods__cards {
+    grid-template-columns: 1fr;
   }
 }
 </style>

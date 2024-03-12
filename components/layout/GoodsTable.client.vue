@@ -10,17 +10,20 @@
       <template #item="{ element, index }">
         <th
           class="table__head-cell"
-          :class="[{ 'table__head-cell_empty': element.control === 'index' }]"
+          :class="[
+            { 'table__head-cell_empty': element.control === 'index' },
+            element.id,
+          ]"
         >
-        <div class="table__head-cell-content handle">
-          <span v-if="element.control === 'action'">Действие</span>
+          <div class="table__head-cell-content handle">
+            <span v-if="element.control === 'action'">Действие</span>
 
-          <span v-else-if="element.control !== 'index'">
-            {{ element.name }}
-          </span>
-        </div>
+            <span v-else-if="element.control !== 'index'">
+              {{ element.name }}
+            </span>
+          </div>
 
-          <!-- <div class="drag"  @mousedown="drag"></div> -->
+          <div class="drag" @mousedown="drag"></div>
         </th>
       </template>
     </draggable>
@@ -84,19 +87,27 @@ const onColumnDragChange = (e) => {
   store.changeTableHeaders(newHeader);
 };
 
-// const drag = (evt) => {
-//       let dragX = evt.clientX;
-//       let block = evt.target.parentElement
+const drag = (evt) => {
+  let dragX = evt.clientX;
+  let block = evt.target.parentElement;
 
-//       document.onmousemove = function onMouseMove(e) {
-//         block.style.width = block.offsetWidth - dragX + e.clientX + "px";
-//         block.style.minWidth = block.offsetWidth - dragX + e.clientX + "px";
-//         dragX = e.clientX;
-//       };
-//       // remove mouse-move listener on mouse-up
-//       document.onmouseup = () =>
-//         (document.onmousemove = document.onmouseup = null);
-//     }
+  let curEls = document.querySelectorAll(`
+    .${block.classList[block.classList.length - 1]}
+  `);
+
+  console.log(curEls);
+  console.log(block.classList[block.classList.length - 1]);
+
+  document.onmousemove = function onMouseMove(e) {
+    for (const el of curEls) {
+      el.style.width = el.offsetWidth + e.clientX - dragX + "px";
+      el.style.flex = "none";
+    }
+    dragX = e.clientX;
+  };
+  // remove mouse-move listener on mouse-up
+  document.onmouseup = () => (document.onmousemove = document.onmouseup = null);
+};
 </script>
 
 <style scoped>
@@ -124,11 +135,12 @@ const onColumnDragChange = (e) => {
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  min-width: 220px;
+  min-width: 30px;
   width: 220px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
 }
 
 .table__head-cell-content {
@@ -136,14 +148,18 @@ const onColumnDragChange = (e) => {
 }
 
 .drag {
+  position: absolute;
+  right: 0;
   width: 2px;
   height: 100%;
   background-color: var(--pale-grey);
+  cursor: col-resize;
 }
 
 .table__head-cell_empty {
   width: 40px;
   min-width: 40px;
+  flex: 0;
 }
 
 .rows-drag .sortable-chosen {
